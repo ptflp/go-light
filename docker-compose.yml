@@ -1,0 +1,21 @@
+version: '3.3'
+services:
+  api:
+    container_name: golightserver_${ENV}
+    build: "."
+    command: bash -c "go run ./cmd/server"
+    restart: always
+    networks:
+      - skynet
+    environment:
+      - ENV=${ENV}
+      - VIRTUAL_HOST=${ENDPOINT}
+      - LETSENCRYPT_HOST=${ENDPOINT}
+      - VIRTUAL_PORT=8955
+    volumes:
+      - /home/go:/go
+      - ./:/go/src/github.com/ptflp/go-light
+networks:
+  skynet:
+    external:
+      name: skynet

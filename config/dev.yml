@@ -1,0 +1,23 @@
+app:
+  dev: true
+  FrontEnd: ""
+
+db:
+  net: "tcp"
+  driver: "mysql"
+  dbname: "golight"
+  username: "root"
+  password: ""
+  host: "100.71.80.123"
+  timeout: 10
+
+redis:
+  host: "127.0.0.1"
+  port: 6379
+
+server:
+  port: 8955
+
+
+SMSC:
+  dev: truelback"

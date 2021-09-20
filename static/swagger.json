@@ -1,0 +1,917 @@
+{
+  "consumes": [
+    "application/json",
+    "multipart/form-data"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "swagger": "2.0",
+  "info": {
+    "description": "Documentation of golight API.\n\nSchemes:\nhttp\nhttps",
+    "title": "light.",
+    "version": "1.0.0"
+  },
+  "basePath": "/",
+  "paths": {
+    "/auth/checkcode": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Проверка смс кода.",
+        "operationId": "checkCodeRequest",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/CheckCodeRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/checkCodeResponse"
+          }
+        }
+      }
+    },
+    "/auth/code": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Отправка смс кода.",
+        "operationId": "sendCodeRequest",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/PhoneCodeRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/sendCodeResponse"
+          }
+        }
+      }
+    },
+    "/auth/email/login": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Авторизация пользователя по емейл + пароль.",
+        "operationId": "EmailLoginRequest",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/EmailLoginRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/EmailLoginResponse"
+          }
+        }
+      }
+    },
+    "/auth/email/registration": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Отправка ссылки активации на почту.",
+        "operationId": "EmailActivationRequest",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/EmailActivationRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/emailRegistrationResponse"
+          }
+        }
+      }
+    },
+    "/auth/email/verification": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Подтверждение почты, авторизация.",
+        "operationId": "EmailVerificationRequest",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/EmailVerificationRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/EmailVerificationResponse"
+          }
+        }
+      }
+    },
+    "/auth/oauth2/facebook/login": {
+      "get": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Авторизация с помощью фэйсбук.",
+        "operationId": "FacebookLoginRequest",
+        "responses": {
+          "200": {
+            "$ref": "#/responses/FacebookLoginResponse"
+          }
+        }
+      }
+    },
+    "/auth/oauth2/google/login": {
+      "get": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Авторизация с помощью гугл.",
+        "operationId": "GoogleLoginRequest",
+        "responses": {
+          "200": {
+            "$ref": "#/responses/GoogleLoginResponse"
+          }
+        }
+      }
+    },
+    "/auth/oauth2/state": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Авторизация с помощью state oauth2.",
+        "operationId": "Oauth2StateRequest",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/StateRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/OauthStateResponse"
+          }
+        }
+      }
+    },
+    "/auth/token/refresh": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Обновление токена.",
+        "operationId": "RefreshTokenRequest",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/RefreshTokenRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/RefreshResponse"
+          }
+        }
+      }
+    },
+    "/people/autocomplete": {
+      "post": {
+        "security": [
+          {
+            "Bearer": [
+              "[]"
+            ]
+          }
+        ],
+        "tags": [
+          "people"
+        ],
+        "summary": "Автозаполнение по никнейму.",
+        "operationId": "peopleAutocompleteRequest",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/UserNicknameRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/peopleAutocompleteResponse"
+          }
+        }
+      }
+    },
+    "/people/get": {
+      "post": {
+        "security": [
+          {
+            "Bearer": [
+              "[]"
+            ]
+          }
+        ],
+        "tags": [
+          "people"
+        ],
+        "summary": "Получить пользователя по никнейму или айди.",
+        "operationId": "peopleIDRequest",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/UserIDNickRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/peopleIDResponse"
+          }
+        }
+      }
+    },
+    "/people/list": {
+      "get": {
+        "security": [
+          {
+            "Bearer": [
+              "[]"
+            ]
+          }
+        ],
+        "tags": [
+          "people"
+        ],
+        "summary": "Лист пользователей.",
+        "operationId": "userListRequest",
+        "responses": {
+          "200": {
+            "$ref": "#/responses/userListResponse"
+          }
+        }
+      }
+    },
+    "/people/list/recommends": {
+      "post": {
+        "security": [
+          {
+            "Bearer": [
+              "[]"
+            ]
+          }
+        ],
+        "tags": [
+          "people"
+        ],
+        "summary": "Лист пользователей.",
+        "operationId": "userRecommendsRequest",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/LimitOffsetReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/userRecommendsResponse"
+          }
+        }
+      }
+    },
+    "/people/list/subscribers": {
+      "post": {
+        "security": [
+          {
+            "Bearer": [
+              "[]"
+            ]
+          }
+        ],
+        "tags": [
+          "people"
+        ],
+        "summary": "Лист пользователей.",
+        "operationId": "userSubscribersRequest",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/LimitOffsetReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/userSubscribersResponse"
+          }
+        }
+      }
+    },
+    "/people/list/subscribes": {
+      "post": {
+        "security": [
+          {
+            "Bearer": [
+              "[]"
+            ]
+          }
+        ],
+        "tags": [
+          "people"
+        ],
+        "summary": "Лист пользователей.",
+        "operationId": "userSubscribesRequest",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/LimitOffsetReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/userSubscribesResponse"
+          }
+        }
+      }
+    },
+    "/people/subscribe": {
+      "post": {
+        "security": [
+          {
+            "Bearer": [
+              "[]"
+            ]
+          }
+        ],
+        "tags": [
+          "people"
+        ],
+        "summary": "Подписаться на пользователя.",
+        "operationId": "userSubscribeRequest",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/UserIDRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/userSubscribeResponse"
+          }
+        }
+      }
+    },
+    "/people/unsubscribe": {
+      "post": {
+        "security": [
+          {
+            "Bearer": [
+              "[]"
+            ]
+          }
+        ],
+        "tags": [
+          "people"
+        ],
+        "summary": "Отписаться от пользователя.",
+        "operationId": "userUnsubscribeRequest",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/UserIDRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/userUnsubscribeResponse"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "AuthTokenData": {
+      "type": "object",
+      "properties": {
+        "access_token": {
+          "type": "string",
+          "x-go-name": "AccessToken"
+        },
+        "refresh_token": {
+          "type": "string",
+          "x-go-name": "RefreshToken"
+        },
+        "user": {
+          "$ref": "#/definitions/UserData"
+        }
+      },
+      "x-go-package": "github.com/ptflp/go-light/request"
+    },
+    "AuthTokenResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/AuthTokenData"
+        },
+        "msg": {
+          "type": "string",
+          "x-go-name": "Msg"
+        },
+        "success": {
+          "type": "boolean",
+          "x-go-name": "Success"
+        }
+      },
+      "x-go-package": "github.com/ptflp/go-light/request"
+    },
+    "CheckCodeRequest": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Code"
+        },
+        "phone": {
+          "type": "string",
+          "x-go-name": "Phone"
+        }
+      },
+      "x-go-package": "github.com/ptflp/go-light/request"
+    },
+    "EmailActivationRequest": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "x-go-name": "Email"
+        },
+        "password": {
+          "type": "string",
+          "x-go-name": "Password"
+        }
+      },
+      "x-go-package": "github.com/ptflp/go-light/request"
+    },
+    "EmailLoginRequest": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "x-go-name": "Email"
+        },
+        "password": {
+          "type": "string",
+          "x-go-name": "Password"
+        }
+      },
+      "x-go-package": "github.com/ptflp/go-light/request"
+    },
+    "EmailVerificationRequest": {
+      "type": "object",
+      "properties": {
+        "activation_id": {
+          "type": "string",
+          "x-go-name": "ActivationID"
+        }
+      },
+      "x-go-package": "github.com/ptflp/go-light/request"
+    },
+    "LimitOffsetReq": {
+      "type": "object",
+      "properties": {
+        "limit": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Limit"
+        },
+        "offset": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Offset"
+        }
+      },
+      "x-go-package": "github.com/ptflp/go-light/request"
+    },
+    "NullBool": {
+      "type": "object",
+      "properties": {
+        "Bool": {
+          "type": "boolean"
+        },
+        "Valid": {
+          "type": "boolean"
+        }
+      },
+      "x-go-package": "github.com/ptflp/go-light/types"
+    },
+    "NullFloat64": {
+      "type": "object",
+      "properties": {
+        "Float64": {
+          "type": "number",
+          "format": "double"
+        },
+        "Valid": {
+          "type": "boolean"
+        }
+      },
+      "x-go-package": "github.com/ptflp/go-light/types"
+    },
+    "NullString": {
+      "description": "NullString is a wrapper around sql.NullString",
+      "type": "object",
+      "properties": {
+        "String": {
+          "type": "string"
+        },
+        "Valid": {
+          "type": "boolean"
+        }
+      },
+      "x-go-package": "github.com/ptflp/go-light/types"
+    },
+    "NullUUID": {
+      "type": "object",
+      "properties": {
+        "Binary": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "uint8"
+          }
+        },
+        "String": {
+          "type": "string"
+        },
+        "Valid": {
+          "type": "boolean"
+        }
+      },
+      "x-go-package": "github.com/ptflp/go-light/types"
+    },
+    "NullUint64": {
+      "type": "object",
+      "x-go-package": "github.com/ptflp/go-light/types"
+    },
+    "PhoneCodeRequest": {
+      "type": "object",
+      "properties": {
+        "phone": {
+          "type": "string",
+          "x-go-name": "Phone"
+        }
+      },
+      "x-go-package": "github.com/ptflp/go-light/request"
+    },
+    "RefreshTokenRequest": {
+      "type": "object",
+      "properties": {
+        "refresh_token": {
+          "type": "string",
+          "x-go-name": "RefreshToken"
+        }
+      },
+      "x-go-package": "github.com/ptflp/go-light/request"
+    },
+    "Response": {
+      "description": "go:generate easytags $GOFILE",
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "x-go-name": "Data"
+        },
+        "msg": {
+          "type": "string",
+          "x-go-name": "Msg"
+        },
+        "success": {
+          "type": "boolean",
+          "x-go-name": "Success"
+        }
+      },
+      "x-go-package": "github.com/ptflp/go-light/request"
+    },
+    "StateRequest": {
+      "type": "object",
+      "properties": {
+        "state": {
+          "type": "string",
+          "x-go-name": "State"
+        }
+      },
+      "x-go-package": "github.com/ptflp/go-light/request"
+    },
+    "UserData": {
+      "type": "object",
+      "properties": {
+        "active": {
+          "$ref": "#/definitions/NullBool"
+        },
+        "cost": {
+          "$ref": "#/definitions/NullFloat64"
+        },
+        "counts": {
+          "$ref": "#/definitions/UserDataCounts"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "x-go-name": "CreatedAt"
+        },
+        "description": {
+          "$ref": "#/definitions/NullString"
+        },
+        "email": {
+          "$ref": "#/definitions/NullString"
+        },
+        "email_verified": {
+          "$ref": "#/definitions/NullBool"
+        },
+        "in_subscribes": {
+          "type": "boolean",
+          "x-go-name": "InSubscribes"
+        },
+        "language": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Language"
+        },
+        "likes_count": {
+          "$ref": "#/definitions/NullUint64"
+        },
+        "name": {
+          "$ref": "#/definitions/NullString"
+        },
+        "nickname": {
+          "$ref": "#/definitions/NullString"
+        },
+        "notify_email": {
+          "$ref": "#/definitions/NullBool"
+        },
+        "notify_push": {
+          "$ref": "#/definitions/NullBool"
+        },
+        "notify_telegram": {
+          "$ref": "#/definitions/NullBool"
+        },
+        "password_set": {
+          "type": "boolean",
+          "x-go-name": "PasswordSet"
+        },
+        "phone": {
+          "$ref": "#/definitions/NullString"
+        },
+        "profile_image": {
+          "$ref": "#/definitions/NullString"
+        },
+        "profile_image_set": {
+          "type": "boolean",
+          "x-go-name": "AvatarSet"
+        },
+        "second_name": {
+          "$ref": "#/definitions/NullString"
+        },
+        "show_subs": {
+          "$ref": "#/definitions/NullBool"
+        },
+        "subscribers_count": {
+          "$ref": "#/definitions/NullUint64"
+        },
+        "subscribes_count": {
+          "$ref": "#/definitions/NullUint64"
+        },
+        "trial": {
+          "$ref": "#/definitions/NullBool"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "x-go-name": "UpdatedAt"
+        },
+        "user_id": {
+          "$ref": "#/definitions/NullUUID"
+        }
+      },
+      "x-go-package": "github.com/ptflp/go-light/request"
+    },
+    "UserDataCounts": {
+      "type": "object",
+      "properties": {
+        "friends": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Friends"
+        },
+        "likes": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Likes"
+        },
+        "posts": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Posts"
+        },
+        "subscribers": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Subscribers"
+        }
+      },
+      "x-go-package": "github.com/ptflp/go-light/request"
+    },
+    "UserIDNickRequest": {
+      "type": "object",
+      "properties": {
+        "nickname": {
+          "type": "string",
+          "x-go-name": "NickName"
+        },
+        "user_id": {
+          "type": "string",
+          "x-go-name": "UUID"
+        }
+      },
+      "x-go-package": "github.com/ptflp/go-light/request"
+    },
+    "UserIDRequest": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "x-go-name": "UUID"
+        }
+      },
+      "x-go-package": "github.com/ptflp/go-light/request"
+    },
+    "UserNicknameRequest": {
+      "type": "object",
+      "properties": {
+        "nickname": {
+          "type": "string",
+          "x-go-name": "Nickname"
+        }
+      },
+      "x-go-package": "github.com/ptflp/go-light/request"
+    }
+  },
+  "responses": {
+    "EmailLoginResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/AuthTokenResponse"
+      }
+    },
+    "EmailVerificationResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/AuthTokenResponse"
+      }
+    },
+    "FacebookLoginResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/Response"
+      }
+    },
+    "GoogleLoginResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/Response"
+      }
+    },
+    "OauthStateResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/AuthTokenResponse"
+      }
+    },
+    "RefreshResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/AuthTokenResponse"
+      }
+    },
+    "checkCodeResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/AuthTokenData"
+      }
+    },
+    "emailRegistrationResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/Response"
+      }
+    },
+    "peopleAutocompleteResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/Response"
+      }
+    },
+    "peopleIDResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/Response"
+      }
+    },
+    "sendCodeResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/Response"
+      }
+    },
+    "userListResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/Response"
+      }
+    },
+    "userRecommendsResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/Response"
+      }
+    },
+    "userSubscribeResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/Response"
+      }
+    },
+    "userSubscribersResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/Response"
+      }
+    },
+    "userSubscribesResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/Response"
+      }
+    },
+    "userUnsubscribeResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/Response"
+      }
+    }
+  },
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  }
+}

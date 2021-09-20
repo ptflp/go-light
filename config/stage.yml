@@ -1,0 +1,18 @@
+app:
+  dev: true
+  FrontEnd: "http://stagefront.ptflp.ru"
+
+db:
+  net: "tcp"
+  driver: "mysql"
+  dbname: "golight"
+  username: "root"
+  password: ""
+  host: "golightdb_stage"
+  timeout: 10
+
+server:
+  port: 8955
+
+SMSC:
+  dev: true

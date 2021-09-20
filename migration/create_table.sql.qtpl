@@ -1,0 +1,18 @@
+{% import (
+    light "github.com/ptflp/go-light"
+) %}
+
+{% func CreateTable(table light.Table) %}
+create table {%s table.Name %}
+(
+	{% for i, field := range table.Fields %}
+        {%s field.Name %} {%s field.Type %} {% if field.Default == "" %}null{% endif %}{%s field.Default %} {% if len(table.Fields) != i+1 %},{% endif %}
+	{% endfor %}
+);
+
+{% if len(table.Constraints) > 0 %}
+    {% for _, constraint := range table.Constraints %}
+    create {% if constraint.Unique %}unique {% endif %}index {%s table.Name %}_{%s constraint.FieldName %}_idx
+     on {%s table.Name %} ({%s constraint.FieldName %});{% endfor %}
+{% endif %}
+     {%s table.Entity.OnCreate() %}{% endfunc %}

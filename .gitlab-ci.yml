@@ -1,0 +1,71 @@
+# This file is a template, and might need editing before it works on your project.
+image: golang:latest
+
+variables:
+  # Please edit to your GitLab project
+  REPO_NAME: github.com/ptflp/go-light
+  GIT_DEPTH: 10
+
+stages:
+  - lint
+  - test
+  - build
+  - deploy
+
+.go-cache:
+  before_script:
+    - mkdir -p $GOPATH/src/$(dirname $REPO_NAME)
+    - ln -svf $CI_PROJECT_DIR $GOPATH/src/$REPO_NAME
+    - cd $GOPATH/src/$REPO_NAME
+    - go mod download -json
+    - curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.30.0
+    - golangci-lint --version
+  cache:
+    key: "$CI_COMMIT_REF_SLUG"
+    paths:
+      - $GOPATH
+lint:
+  stage: lint
+  extends: .go-cache
+  script:
+    - go fmt $(go list ./... | grep -v /vendor/)
+    - go vet $(go list ./... | grep -v /vendor/)
+    - golangci-lint run --skip-dirs docs
+
+test:
+  stage: test
+  extends: .go-cache
+  script:
+    - go test -race $(go list ./... | grep -v /vendor/)
+
+compile:
+  stage: build
+  extends: .go-cache
+  script:
+    - go build -race -ldflags "-extldflags '-static'" -o $CI_PROJECT_DIR/app
+  artifacts:
+    paths:
+      - app
+
+deploy_production:
+  image: alpine:3
+  stage: deploy
+  script:
+    - echo "Deploy to production server"
+  environment:
+    name: production
+    url: https://light.ptflp.ru
+  only:
+    - main
+
+deploy_stage:
+  image: alpine:3
+  stage: deploy
+  script:
+    - echo "Deploy to production server"
+  environment:
+    name: stage
+    url: https://light.ptflp.ru
+  when: manual
+  only:
+    - dev
